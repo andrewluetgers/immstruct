@@ -71,7 +71,7 @@ function Structure (options) {
   this._pathListeners = Immutable.Map();
   this.on('swap', function (newData, oldData, keyPath) {
     pathCombinations(keyPath).reduce(function(fns, path) {
-      return fns.concat(self._referencelisteners.get(Immutable.List(path), Immutable.Set()));
+      return fns.concat(self._referencelisteners.get(path, Immutable.Set()));
     }, Immutable.Set()).forEach(function(fn) {
       fn(keyPath, newData, oldData);
     });
@@ -84,14 +84,14 @@ module.exports = Structure;
 
 function subscribe(listeners, path, fn) {
   return pathCombinations(path).reduce(function(listeners, path) {
-    return listeners.updateIn([Immutable.List(path)], Immutable.OrderedSet(), function(old) {
+    return listeners.updateIn([path], Immutable.OrderedSet(), function(old) {
       return old.add(fn);
     });
   }, listeners)
 }
 function unsubscribe(listeners, path, fn) {
   return pathCombinations(path).reduce(function(listeners, path) {
-    return listeners.updateIn([Immutable.List(path)], Immutable.OrderedSet(), function(old) {
+    return listeners.updateIn([path], Immutable.OrderedSet(), function(old) {
       return old.remove(fn);
     });
   }, listeners);
