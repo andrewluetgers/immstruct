@@ -1059,7 +1059,7 @@ describe('structure', function () {
         ref.observe(function () { i++; });
         ref2.observe(function () { i2++; });
         ref2.cursor().update(function () { return 'updated'; });
-        ref2.observe(function () { if(i == 1 && i2 == 1) done(); });
+        ref2.observe(function () { if(i == 1 && i2 == 2) done(); });
         ref.unobserveAll();
         ref.cursor().update(function () { return 'updated again'; });
       });

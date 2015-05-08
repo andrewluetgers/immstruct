@@ -84,14 +84,14 @@ module.exports = Structure;
 
 function subscribe(listeners, path, fn) {
   return pathCombinations(path).reduce(function(listeners, path) {
-    return listeners.updateIn([Immutable.List(path)], Immutable.Set(), function(old) {
+    return listeners.updateIn([Immutable.List(path)], Immutable.OrderedSet(), function(old) {
       return old.add(fn);
     });
   }, listeners)
 }
 function unsubscribe(listeners, path, fn) {
   return pathCombinations(path).reduce(function(listeners, path) {
-    return listeners.updateIn([Immutable.List(path)], Immutable.Set(), function(old) {
+    return listeners.updateIn([Immutable.List(path)], Immutable.OrderedSet(), function(old) {
       return old.remove(fn);
     });
   }, listeners);
