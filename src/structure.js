@@ -513,11 +513,10 @@ function hasIn(cursor, path) {
 }
 
 function pathCombinations(path) {
-  var paths = (path||[]).reduce(function(acc,segment) {
-    acc.push(acc[acc.length-1].concat(segment));
-    return acc;
-  }, [[]]);
-  return paths;
+    return (path||[]).reduce(function(acc,segment) {
+        var previous = acc.get(acc.size - 1);
+        return acc.push(previous.push(segment));
+    }, Immutable.List([Immutable.List()]));
 }
 
 function onlyOnEvent(eventName, fn) {
